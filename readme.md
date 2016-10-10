@@ -6,4 +6,4 @@
 ### client端
     在Edison上运行,将从BNO055读到的数据通过网络转发出去.
 ### 程序参考链接
-http://www.binarytides.com/server-client-example-c-sockets-linux/
+    http://www.binarytides.com/server-client-example-c-sockets-linux/
