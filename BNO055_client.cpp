@@ -75,8 +75,8 @@ int main(int argc, char **argv)
   //create a socket
     int sock;
     struct sockaddr_in server;
-    char message[1000] , server_reply[2000];
-
+    //char message[1000] , server_reply[2000];
+    float message[3];
     //Create socket
     sock = socket(AF_INET , SOCK_STREAM , 0);
     if (sock == -1)
@@ -113,9 +113,9 @@ int main(int argc, char **argv)
            << " degrees"
            << endl;
 
-
-      strcpy(message,float_to_str(x,y,z).c_str());//float to string
-      if( send(sock , message , strlen(message) , 0) < 0){  //send data
+      message[0]=x;meesage[1]=y;message[2]=z;
+      //strcpy(message,float_to_str(x,y,z).c_str());//float to string
+      if( send(sock , message , sizeof(float)*3, 0) < 0){  //send data
                 puts("Send failed");
                 return 1;
       }
