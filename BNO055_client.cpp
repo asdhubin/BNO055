@@ -30,7 +30,11 @@ void sig_handler(int signo)
 
 
 int main(int argc, char **argv)
-{
+{	char *server_ip="192.168.1.101";
+	int shouldInit=false;
+	if(argc==2){server_ip=argv[1];}
+	else if(argc==3){server_ip=argv[2];shouldInit=true;}
+
   signal(SIGINT, sig_handler);
 //! [Interesting]
 
@@ -53,7 +57,7 @@ int main(int argc, char **argv)
   cout << endl;
 
   // do the calibration...
-  while (shouldRun && !sensor->isFullyCalibrated())
+  while (shouldInit && !sensor->isFullyCalibrated())
     {
       int mag, acc, gyr, sys;
       sensor->getCalibrationStatus(&mag, &acc, &gyr, &sys);
@@ -86,7 +90,7 @@ int main(int argc, char **argv)
     puts("Socket created");
 
     /*Attention! Please check the IP and port. */
-    server.sin_addr.s_addr = inet_addr("127.0.0.1");
+    server.sin_addr.s_addr = inet_addr(server_ip);
     server.sin_family = AF_INET;
     server.sin_port = htons( 8888 );
 
@@ -113,7 +117,7 @@ int main(int argc, char **argv)
            << " degrees"
            << endl;
 
-      message[0]=x;meesage[1]=y;message[2]=z;
+      message[0]=x;message[1]=y;message[2]=z;
       //strcpy(message,float_to_str(x,y,z).c_str());//float to string
       if( send(sock , message , sizeof(float)*3, 0) < 0){  //send data
                 puts("Send failed");
